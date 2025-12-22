@@ -13,5 +13,18 @@
         "laravel-vite-plugin": "^2.0.0",
         "tailwindcss": "^4.1.14",
         "vite": "^7.0.7"
+    },
+    "dependencies": {
+        "@alpinejs/persist": "^3.15.3",
+        "@fullcalendar/core": "^6.1.19",
+        "@fullcalendar/daygrid": "^6.1.19",
+        "@fullcalendar/interaction": "^6.1.19",
+        "@fullcalendar/list": "^6.1.19",
+        "@fullcalendar/timegrid": "^6.1.19",
+        "alpinejs": "^3.15.3",
+        "apexcharts": "^5.3.6",
+        "dropzone": "^6.0.0-beta.2",
+        "flatpickr": "^4.6.13",
+        "jsvectormap": "^1.7.0"
     }
 }
