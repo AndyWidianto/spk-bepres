@@ -17,8 +17,8 @@ return new class extends Migration
             $table->decimal('gpa', total: 3, places: 2); // IPK
             $table->decimal('income_parents', total: 12, places: 0); // Penghasilan orang tua
             $table->integer('achievement'); // jumlah/level prestasi
-            $table->decimal('wp_score', total: 10, places: 4); // Skor WP
-            $table->enum('status', ['lolos', 'tidak lolos']); // Status
+            $table->decimal('wp_score', total: 10, places: 4)->nullable(); // Skor WP
+            $table->enum('status', ['lolos', 'tidak lolos'])->nullable(); // Status
             $table->timestamps();
         });
     }
