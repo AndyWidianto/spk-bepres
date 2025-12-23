@@ -116,6 +116,26 @@
                     </li>
                     <!-- Menu Item Skor -->
 
+                    <!-- Menu Item Hasil Kelulusan -->
+                    <li>
+                        <a href="{{ url('/calculations') }}"
+                            class="menu-item group {{ Request::segment(1) == 'calculations' ? 'menu-item-active' : 'menu-item-inactive' }}">
+
+                            <svg class="{{ Request::segment(1) == 'calculations' ? 'menu-item-icon-active' : 'menu-item-icon-inactive' }}"
+                                aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                                viewBox="0 0 24 24">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M17.651 7.65a7.131 7.131 0 0 0-12.68 3.15M18.001 4v4h-4m-7.652 8.35a7.13 7.13 0 0 0 12.68-3.15M6 20v-4h4" />
+                            </svg>
+
+                            <span class="menu-item-text" :class="sidebarToggle ? 'lg:hidden' : ''">
+                                Proses Kalkulasi
+                            </span>
+                        </a>
+                    </li>
+                    <!-- Menu Item Hasil Kelulusan -->
+
                 </ul>
             </div>
         </nav>
