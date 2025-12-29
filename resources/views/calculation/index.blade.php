@@ -93,11 +93,6 @@
                                 </th>
                                 <th>
                                     <span class="flex items-center">
-                                        Skor
-                                    </span>
-                                </th>
-                                <th>
-                                    <span class="flex items-center">
                                         Status
                                     </span>
                                 </th>
@@ -114,7 +109,6 @@
                                 <td>{{ $item->gpa }}</td>
                                 <td> Rp {{ number_format($item->income_parents, 0, ',', '.') }}</td>
                                 <td>{{ $item->achievement }}</td>
-                                <td>{{ $item->score }}</td>
                                 <td>{{ $item->status == '' ? '-' : $item->status }}</td>
                             </tr>
                             @endforeach
