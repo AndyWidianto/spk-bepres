@@ -15,16 +15,13 @@ class WeightedProductController extends Controller
      */
     public function index()
     {
-        $results = Score::select(
+        $results = Alternative::select(
             'alternatives.name',
             'alternatives.gpa',
             'alternatives.income_parents',
             'alternatives.achievement',
-            'alternatives.status',
-            'scores.score'
+            'alternatives.status'
         )
-            ->join('alternatives', 'scores.alternative_id', '=', 'alternatives.alternative_id')
-            ->join('criterias', 'scores.criteria_id', '=', 'criterias.criteria_id')
             ->get();
 
         return view('calculation.index', compact('results'));
