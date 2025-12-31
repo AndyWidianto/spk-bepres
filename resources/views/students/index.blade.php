@@ -77,17 +77,22 @@
                                 </th>
                                 <th>
                                     <span class="flex items-center">
-                                        IPK
+                                        Nim
                                     </span>
                                 </th>
                                 <th>
                                     <span class="flex items-center">
-                                        Penghasilan Ortu
+                                        Program Studi
                                     </span>
                                 </th>
                                 <th>
                                     <span class="flex items-center">
-                                        Prestasi
+                                        Fakultas
+                                    </span>
+                                </th>
+                                <th>
+                                    <span class="flex items-center">
+                                        Universitas
                                     </span>
                                 </th>
                                 <th>
@@ -105,9 +110,10 @@
                                 <td class="font-medium text-gray-900 whitespace-nowrap dark:text-white">{{
                                     $loop->iteration }}</td>
                                 <td>{{ $item->name }}</td>
-                                <td>{{ $item->gpa }}</td>
-                                <td> Rp {{ number_format($item->income_parents, 0, ',', '.') }}</td>
-                                <td>{{ $item->achievement }}</td>
+                                <td>{{ $item->nim }}</td>
+                                <td>{{ $item->program_study }}</td>
+                                <td>{{ $item->faculty }}</td>
+                                <td>{{ $item->university }}</td>
                                 <td>
 
                                     <div class="text-center mt-3">

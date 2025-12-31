@@ -17,10 +17,6 @@ class WeightedProductController extends Controller
     {
         $results = Alternative::select(
             'alternatives.name',
-            'alternatives.gpa',
-            'alternatives.income_parents',
-            'alternatives.achievement',
-            'alternatives.status'
         )
             ->get();
 
@@ -38,75 +34,96 @@ class WeightedProductController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-        DB::beginTransaction();
+public function store(Request $request)
+{
+    DB::beginTransaction();
 
-        try {
-            // 1️⃣ Ambil semua kriteria
-            $criterias = Criteria::all();
+    try {
+        // 1️⃣ Ambil kriteria + normalisasi bobot
+        $criterias = Criteria::all()->map(function ($c) {
+            $c->weight = $c->weight / 100;
+            return $c;
+        });
 
-            // 2️⃣ Normalisasi bobot
-            $totalWeight = $criterias->sum('weight');
+        // 2️⃣ Ambil alternatif + nilai
+        $alternatives = Alternative::with('scores')->get();
 
-            $normalizedWeights = [];
-            foreach ($criterias as $c) {
-                $normalizedWeights[$c->criteria_id] = $c->weight / $totalWeight;
-            }
+        // 3️⃣ Hitung matrik S
+        $matrikS = [];
 
-            // 3️⃣ Ambil semua alternatif (mahasiswa)
-            $alternatives = Alternative::all();
+        $testCriterias = [];
+        foreach ($alternatives as $alt) {
+            $scoreS = 1; // WAJIB 1
 
-            foreach ($alternatives as $alt) {
+            foreach ($alt->scores as $score) {
+                $criteria = $criterias->firstWhere('criteria_id', $score->criteria_id);
+                $testCriterias[] = $criteria;
+                if ($criteria) {
+                    $weight = $criteria->type === 'cost'
+                        ? -$criteria->weight
+                        : $criteria->weight;
 
-                $wpScore = 1;
-
-                // 4️⃣ Ambil nilai tiap kriteria
-                foreach ($criterias as $c) {
-
-                    $score = Score::where('alternative_id', $alt->alternative_id)
-                        ->where('criteria_id', $c->criteria_id)
-                        ->first();
-
-                    if (!$score) {
-                        continue; // jika nilai belum lengkap
-                    }
-
-                    $value = $score->score;
-                    $weight = $normalizedWeights[$c->criteria_id];
-
-                    // 5️⃣ Benefit / Cost
-                    if ($c->type === 'cost') {
-                        $weight = -$weight;
-                    }
-
-                    $wpScore *= pow($value, $weight);
+                    $scoreS *= pow($score->score, $weight);
                 }
-
-                // 6️⃣ Simpan hasil WP
-                $alt->update([
-                    'wp_score' => round($wpScore, 4)
-                ]);
             }
 
-            // 7️⃣ Ranking & Status
-            $ranked = Alternative::orderByDesc('wp_score')->get();
-
-            $quota = 3; // maks kuota penerima beasiswa
-
-            foreach ($ranked as $index => $alt) {
-                $alt->status = ($index < $quota) ? 'lolos' : 'tidak lolos';
-                $alt->save();
-            }
-
-            DB::commit();
-
-            return redirect()->back()->with('success', 'Perhitungan WP berhasil dilakukan');
-        } catch (\Exception $e) {
-            DB::rollBack();
-            return redirect()->back()->with('error', $e->getMessage());
+            $matrikS[] = [
+                'alternative_id' => $alt->alternative_id,
+                'name'           => $alt->name,
+                'score_s'        => $scoreS
+            ];
         }
+
+        // 4️⃣ Hitung total S
+        $totalS = array_sum(array_column($matrikS, 'score_s'));
+
+        // 5️⃣ Hitung matrik V
+        $matrikV = [];
+        foreach ($matrikS as $s) {
+            $matrikV[] = [
+                'alternative_id' => $s['alternative_id'],
+                'name'           => $s['name'],
+                'score_s'        => $s['score_s'],
+                'score_v'        => $s['score_s'] / $totalS
+            ];
+        }
+
+        // 6️⃣ Ranking
+        $ranked = collect($matrikV)
+            ->sortByDesc('score_v')
+            ->values()
+            ->map(function ($item, $index) {
+                $item['rank'] = $index + 1;
+                return $item;
+            })
+            ->all();
+        // 7️⃣ Simpan nilai akhir ke tabel alternatives
+        foreach ($ranked as $item) { 
+            $alternative = Alternative::find($item['alternative_id']);
+            if ($alternative) {
+                $alternative->final_score = $item['score_v'];
+                $alternative->save();
+            }
+        }
+        DB::commit();
+
+        return response()->json([
+            'matrikS' => $matrikS,
+            'matrikV' => $matrikV,
+            'criterias' => $criterias,
+            'ranked'  => $ranked,
+            'alternatives' => $alternatives
+        ]);
+
+    } catch (\Exception $e) {
+        DB::rollBack();
+
+        return response()->json([
+            'error' => $e->getMessage()
+        ], 500);
     }
+}
+
 
     /**
      * Display the specified resource.

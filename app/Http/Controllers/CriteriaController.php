@@ -35,8 +35,9 @@ class CriteriaController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'criteria_name' => 'required|max:255',
-            'weight' => 'required|numeric|regex:/^\d+(\.\d{2})$/',
+            'weight' => 'required|integer|min:1|max:100',
             'type' => 'required|in:benefit,cost',
+            'code' => 'nullable|string|max:50',
         ]);
 
         if ($validator->fails()) {
@@ -47,7 +48,8 @@ class CriteriaController extends Controller
             Criteria::create([
                 'criteria_name' => trim($request->input('criteria_name')),
                 'weight' => $request->input('weight'),
-                'type' => trim($request->input('type'))
+                'type' => trim($request->input('type')),
+                'code' => trim($request->input('code'))
             ]);
 
             Session::flash('success', 'Data kriteria berhasil ditambahkan.');
@@ -80,8 +82,9 @@ class CriteriaController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'criteria_name' => 'required|max:255',
-            'weight' => 'required|numeric|regex:/^\d+(\.\d{2})$/',
+            'weight' => 'required|integer|min:1|max:100',
             'type' => 'required|in:benefit,cost',
+            'code' => 'nullable|string|max:50',
         ]);
 
         if ($validator->fails()) {
@@ -95,6 +98,7 @@ class CriteriaController extends Controller
             $criteria->criteria_name = trim($request->input('criteria_name'));
             $criteria->weight = $request->input('weight');
             $criteria->type = trim($request->input('type'));
+            $criteria->code = trim($request->input('code'));
             $criteria->save();
 
             Session::flash('success', 'Data kriteria berhasil diperbarui.');

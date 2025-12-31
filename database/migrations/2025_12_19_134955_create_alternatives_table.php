@@ -14,11 +14,11 @@ return new class extends Migration
         Schema::create('alternatives', function (Blueprint $table) {
             $table->bigIncrements('alternative_id'); // Id alternatif
             $table->string('name'); // Nama mahasiswa
-            $table->decimal('gpa', total: 3, places: 2); // IPK
-            $table->decimal('income_parents', total: 12, places: 0); // Penghasilan orang tua
-            $table->integer('achievement'); // jumlah/level prestasi
-            $table->decimal('wp_score', total: 10, places: 4)->nullable(); // Skor WP
-            $table->enum('status', ['lolos', 'tidak lolos'])->nullable(); // Status
+            $table->string('nim');
+            $table->string('program_study');
+            $table->string('faculty');
+            $table->string('university');
+            $table->decimal('final_score', total: 10, places: 6)->nullable(); // Nilai akhir setelah perhitungan WP
             $table->timestamps();
         });
     }

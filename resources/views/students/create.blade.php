@@ -33,44 +33,57 @@
 
             <!-- Elements -->
             <div>
-                <label for="gpa" class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
-                    IPK
+                <label for="name" class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
+                    Nim Mahasiswa
                 </label>
-                <input type="text" name="gpa" id="gpa" value="{{ old('gpa') }}" required autocomplete="off"
+                <input type="text" name="nim" id="nim" value="{{ old('nim') }}" autocomplete="off" required placeholder="contoh 222054353"
                     class="dark:bg-dark-900 shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10 dark:focus:border-brand-800 h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-400 focus:ring-3 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30" />
 
-                @if ($errors->has('gpa'))
+                @if ($errors->has('nim'))
                 <p class="mt-2 text-sm text-red-600 dark:text-red-500">
-                    {{ucfirst($errors->first('gpa'))}}</p>
+                    {{ucfirst($errors->first('nim'))}}</p>
                 @endif
             </div>
 
             <!-- Elements -->
             <div>
-                <label for="income_parents" class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
-                    Penghasilan Orang Tua
+                <label for="program_study" class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
+                    Program Studi
                 </label>
-                <input type="number" name="income_parents" value="{{ old('income_parents') }}" id="income_parents"
-                    required
+                <input type="text" name="program_study" id="program_study" value="{{ old('program_study') }}" autocomplete="off" required
                     class="dark:bg-dark-900 shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10 dark:focus:border-brand-800 h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-400 focus:ring-3 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30" />
 
-                @if ($errors->has('income_parents'))
+                @if ($errors->has('program_study'))
                 <p class="mt-2 text-sm text-red-600 dark:text-red-500">
-                    {{ucfirst($errors->first('income_parents'))}}</p>
+                    {{ucfirst($errors->first('program_study'))}}</p>
                 @endif
             </div>
 
             <!-- Elements -->
             <div>
-                <label for="achievement" class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
-                    Prestasi
+                <label for="faculty" class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
+                    Fakultas
                 </label>
-                <input type="number" name="achievement" value="{{ old('achievement') }}" id="achievement" required
+                <input type="text" name="faculty" id="faculty" value="{{ old('faculty') }}" autocomplete="off" required
                     class="dark:bg-dark-900 shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10 dark:focus:border-brand-800 h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-400 focus:ring-3 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30" />
 
-                @if ($errors->has('achievement'))
+                @if ($errors->has('faculty'))
                 <p class="mt-2 text-sm text-red-600 dark:text-red-500">
-                    {{ucfirst($errors->first('achievement'))}}</p>
+                    {{ucfirst($errors->first('faculty'))}}</p>
+                @endif
+            </div>
+
+            <!-- Elements -->
+            <div>
+                <label for="university" class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
+                    Universitas
+                </label>
+                <input type="text" name="university" id="university" value="{{ old('university') }}" autocomplete="off" required
+                    class="dark:bg-dark-900 shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10 dark:focus:border-brand-800 h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-400 focus:ring-3 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30" />
+
+                @if ($errors->has('university'))
+                <p class="mt-2 text-sm text-red-600 dark:text-red-500">
+                    {{ucfirst($errors->first('university'))}}</p>
                 @endif
             </div>
 

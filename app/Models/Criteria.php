@@ -9,4 +9,5 @@ class Criteria extends Model
     protected $table = 'criterias';
     protected $primaryKey = 'criteria_id';
     protected $guarded = [];
+    
 }

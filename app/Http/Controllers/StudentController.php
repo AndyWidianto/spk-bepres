@@ -33,10 +33,11 @@ class StudentController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|max:255',
-            'gpa' => 'required|numeric',
-            'income_parents' => 'required|numeric',
-            'achievement' => 'required|numeric',
+            'name' => 'required|string|max:255',
+            'nim' => 'required|string|max:50',
+            'program_study' => 'required|string|max:100',
+            'faculty' => 'required|string|max:100',
+            'university' => 'required|string|max:100',
         ]);
 
         if ($validator->fails()) {
@@ -47,9 +48,10 @@ class StudentController extends Controller
 
             Alternative::create([
                 'name' => trim($request->input('name')),
-                'gpa' => $request->input('gpa'),
-                'income_parents' => (int)$request->input('income_parents'),
-                'achievement' => (int)$request->input('achievement')
+                'nim' => trim($request->input('nim')),
+                'program_study' => trim($request->input('program_study')),
+                'faculty' => trim($request->input('faculty')),
+                'university' => trim($request->input('university')),
             ]);
 
             Session::flash('success', 'Data mahasiswa berhasil ditambahkan.');
@@ -82,9 +84,10 @@ class StudentController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:255',
-            'gpa' => 'required|numeric',
-            'income_parents' => 'required|numeric',
-            'achievement' => 'required|numeric',
+            'nim' => 'required|max:50',
+            'program_study' => 'required|max:100',
+            'faculty' => 'required|string|max:100',
+            'university' => 'required|string|max:100',
         ]);
 
         if ($validator->fails()) {
@@ -96,9 +99,10 @@ class StudentController extends Controller
 
             $student = Alternative::findOrFail($id);
             $student->name = trim($request->input('name'));
-            $student->gpa = $request->input('gpa');
-            $student->income_parents = (int)$request->input('income_parents');
-            $student->achievement = (int)$request->input('achievement');
+            $student->nim = trim($request->input('nim'));
+            $student->program_study = trim($request->input('program_study'));
+            $student->faculty = trim($request->input('faculty'));
+            $student->university = trim($request->input('university'));
             $student->save();
 
             return redirect('/students')->with('success', 'Data mahasiswa berhasil diperbarui.');
