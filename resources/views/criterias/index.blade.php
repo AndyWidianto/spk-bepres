@@ -72,6 +72,11 @@
                                 </th>
                                 <th>
                                     <span class="flex items-center">
+                                        Code
+                                    </span>
+                                </th>
+                                <th>
+                                    <span class="flex items-center">
                                         Nama
                                     </span>
                                 </th>
@@ -99,8 +104,9 @@
                             <tr>
                                 <td class="font-medium text-gray-900 whitespace-nowrap dark:text-white">{{
                                     $loop->iteration }}</td>
+                                <td>{{ $item->code }}</td>
                                 <td>{{ $item->criteria_name }}</td>
-                                <td>{{ $item->weight }}</td>
+                                <td>{{ $item->weight }}%</td>
                                 <td>{{ $item->type }}</td>
                                 <td>
 

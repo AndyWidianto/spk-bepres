@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::create('criterias', function (Blueprint $table) {
             $table->bigIncrements('criteria_id'); // Id kriteria
+            $table->string("code");
             $table->string('criteria_name'); // Nama kriteria
-            $table->decimal('weight', total: 4, places: 2); // Bobot contoh: 0.40
+            $table->integer('weight'); // Bobot
             $table->enum('type', ['benefit', 'cost']); // Tipe
             $table->timestamps();
         });

@@ -33,58 +33,73 @@
                 <p class="mt-2 text-sm text-red-600">{{ ucfirst($message) }}</p>
                 @enderror
             </div>
-
-            <!-- IPK -->
+            <!-- Nim -->
             <div>
-                <label for="gpa" class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
-                    IPK
+                <label for="nim" class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
+                    Nim Mahasiswa
                 </label>
-                <input type="number" step="0.01" name="gpa" id="gpa" required value="{{ old('gpa', $student->gpa) }}"
-                    class="dark:bg-dark-900 shadow-theme-xs focus:border-brand-300
+                <input type="text" name="nim" id="nim" autocomplete="off" required
+                    value="{{ old('nim', $student->nim) }}" class="dark:bg-dark-900 shadow-theme-xs focus:border-brand-300
                            focus:ring-brand-500/10 h-11 w-full rounded-lg
                            border border-gray-300 bg-transparent px-4 py-2.5
                            text-sm text-gray-800 focus:ring-3 focus:outline-hidden
                            dark:border-gray-700 dark:bg-gray-900 dark:text-white/90">
 
-                @error('gpa')
+                @error('name')
                 <p class="mt-2 text-sm text-red-600">{{ ucfirst($message) }}</p>
                 @enderror
             </div>
 
-            <!-- Penghasilan Orang Tua -->
+            <!-- Program Studi -->
             <div>
-                <label for="income_parents" class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
-                    Penghasilan Orang Tua
+                <label for="program_study" class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
+                    Program Studi
                 </label>
-                <input type="number" name="income_parents" id="income_parents" required
-                    value="{{ old('income_parents', $student->income_parents) }}" class="dark:bg-dark-900 shadow-theme-xs focus:border-brand-300
+                <input type="text" name="program_study" id="program_study" autocomplete="off" required
+                    value="{{ old('program_study', $student->program_study) }}" class="dark:bg-dark-900 shadow-theme-xs focus:border-brand-300
                            focus:ring-brand-500/10 h-11 w-full rounded-lg
                            border border-gray-300 bg-transparent px-4 py-2.5
                            text-sm text-gray-800 focus:ring-3 focus:outline-hidden
                            dark:border-gray-700 dark:bg-gray-900 dark:text-white/90">
 
-                @error('income_parents')
+                @error('name')
                 <p class="mt-2 text-sm text-red-600">{{ ucfirst($message) }}</p>
                 @enderror
             </div>
 
-            <!-- Prestasi -->
+            <!-- Fakultas -->
             <div>
-                <label for="achievement" class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
-                    Prestasi
+                <label for="faculty" class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
+                    Fakultas
                 </label>
-                <input type="number" name="achievement" id="achievement" required
-                    value="{{ old('achievement', $student->achievement) }}" class="dark:bg-dark-900 shadow-theme-xs focus:border-brand-300
+                <input type="text" name="faculty" id="faculty" autocomplete="off" required
+                    value="{{ old('faculty', $student->faculty) }}" class="dark:bg-dark-900 shadow-theme-xs focus:border-brand-300
                            focus:ring-brand-500/10 h-11 w-full rounded-lg
                            border border-gray-300 bg-transparent px-4 py-2.5
                            text-sm text-gray-800 focus:ring-3 focus:outline-hidden
                            dark:border-gray-700 dark:bg-gray-900 dark:text-white/90">
 
-                @error('achievement')
+                @error('name')
                 <p class="mt-2 text-sm text-red-600">{{ ucfirst($message) }}</p>
                 @enderror
             </div>
+            <!-- Universitas -->
+            <div>
+                <label for="university" class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
+                    Universitas
+                </label>
+                <input type="text" name="university" id="university" autocomplete="off" required
+                    value="{{ old('university', $student->university) }}" class="dark:bg-dark-900 shadow-theme-xs focus:border-brand-300
+                           focus:ring-brand-500/10 h-11 w-full rounded-lg
+                           border border-gray-300 bg-transparent px-4 py-2.5
+                           text-sm text-gray-800 focus:ring-3 focus:outline-hidden
+                           dark:border-gray-700 dark:bg-gray-900 dark:text-white/90">
 
+                @error('university')
+                <p class="mt-2 text-sm text-red-600">{{ ucfirst($message) }}</p>
+                @enderror
+            </div>
+    
             <!-- Button -->
             <div class="flex gap-2">
                 <button type="submit" class="focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500
