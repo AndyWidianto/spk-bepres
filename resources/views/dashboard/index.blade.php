@@ -8,114 +8,214 @@
     <li class="text-sm text-gray-800 dark:text-white/90">Dashboard</li>
 </ol>
 
-<div class="mt-5 mx-auto mb-5">
-    <div
-        class=" p-6 mr-5 mb-3 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+    <!-- Main Content -->
+    <div class="min-h-screen">
+        <!-- Main Content Area -->
+        <main class="p-6">
+            <!-- Header Dashboard -->
+            <div class="mb-8">
+                <h1 class="text-2xl md:text-3xl font-bold text-gray-800 mb-2">Dashboard</h1>
+                <p class="text-gray-600">Sistem Pendukung Keputusan (SPK) menggunakan metode Weighted Product (WP) untuk seleksi penerima beasiswa prestasi.</p>
+            </div>
 
-        <svg class="w-12 h-12 text-gray-800 dark:text-white mb-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-            width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-            <path fill-rule="evenodd"
-                d="M12 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm-2 9a4 4 0 0 0-4 4v1a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-1a4 4 0 0 0-4-4h-4Z"
-                clip-rule="evenodd" />
-        </svg>
+            <!-- Statistik Cards -->
+            <div class="grid sm:grid-cols-1 lg:grid-cols-4 md:grid-cols-2 gap-6 mb-10">
+                <div class="bg-white rounded-xl shadow-sm p-6 border-l-4 border-blue-500">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-500 text-sm font-medium">Total Mahasiswa</p>
+                            <p class="text-2xl font-bold text-gray-800 mt-1">{{ $totalAlternatives }}</p>
+                        </div>
+                        <div class="bg-blue-100 p-3 rounded-lg">
+                            <i class="fas fa-users text-blue-600 text-xl"></i>
+                        </div>
+                    </div>
+                    <p class="text-green-600 text-sm mt-3 font-medium">
+                        <i class="fas fa-arrow-up mr-1"></i> 12% dari periode lalu
+                    </p>
+                </div>
 
-        <h5 class="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">Selamat datang Admin!</h5>
+                <div class="bg-white rounded-xl shadow-sm p-6 border-l-4 border-indigo-500">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-500 text-sm font-medium">Total Kriteria</p>
+                            <p class="text-2xl font-bold text-gray-800 mt-1">{{ $criterias->count() }}</p>
+                        </div>
+                        <div class="bg-indigo-100 p-3 rounded-lg">
+                            <i class="fas fa-list-alt text-indigo-600 text-xl"></i>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 text-sm mt-3 font-medium">
+                        @foreach ($criterias as $criteria)
+                            {{ $criteria->criteria_name }}@if (!$loop->last), @endif
+                        @endforeach
+                    </p>
+                </div>
 
-        <p class="mb-3 font-normal text-gray-500 dark:text-gray-400">Kelola dan seleksi beasiswa prestasi menggunakan
-            sistem SPK.</p>
-    </div>
+                <div class="bg-white rounded-xl shadow-sm p-6 border-l-4 border-green-500">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-500 text-sm font-medium">Lolos Seleksi</p>
+                            <p class="text-2xl font-bold text-gray-800 mt-1">{{ $alternatives->count() }}</p>
+                        </div>
+                        <div class="bg-green-100 p-3 rounded-lg">
+                            <i class="fas fa-check-circle text-green-600 text-xl"></i>
+                        </div>
+                    </div>
+                    <p class="text-green-600 text-sm mt-3 font-medium">
+                        <i class="fas fa-arrow-up mr-1"></i> {{ $alternatives->count() > 0 ? ($alternatives->count() / $totalAlternatives * 100) : 0 }}% dari total peserta
+                    </p>
+                </div>
 
-    {{-- <div
-        class="max-w-sm p-6 mr-5 mb-3 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+                <div class="bg-white rounded-xl shadow-sm p-6 border-l-4 border-purple-500">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-500 text-sm font-medium">Tahun Akademik</p>
+                            <p class="text-2xl font-bold text-gray-800 mt-1">{{ date('Y') }}/{{ date('Y', strtotime('+1 year')) }}</p>
+                        </div>
+                        <div class="bg-purple-100 p-3 rounded-lg">
+                            <i class="fas fa-calendar-alt text-purple-600 text-xl"></i>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 text-sm mt-3 font-medium">
+                        @php
+                            $bulan = date('n');
+                            $semester = ($bulan >= 7) ? 'Ganjil' : 'Genap';
+                        @endphp
 
-        <svg class="w-12 h-12 text-gray-800 mb-3 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-            width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-            <path fill-rule="evenodd"
-                d="M9 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm-2 9a4 4 0 0 0-4 4v1a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-1a4 4 0 0 0-4-4H7Zm8-1a1 1 0 0 1 1-1h1v-1a1 1 0 1 1 2 0v1h1a1 1 0 1 1 0 2h-1v1a1 1 0 1 1-2 0v-1h-1a1 1 0 0 1-1-1Z"
-                clip-rule="evenodd" />
-        </svg>
-
-        <h5 class="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">Total Mahasiswa Lolos</h5>
-
-        <p class="mb-3 font-normal text-gray-500 dark:text-gray-400 text-2xl">{{ $countPassed }}</p>
-    </div>
-
-    <div
-        class="max-w-sm p-6 mb-3 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
-
-        <svg class="w-12 h-12 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-            width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-            <path fill-rule="evenodd"
-                d="M5 8a4 4 0 1 1 8 0 4 4 0 0 1-8 0Zm-2 9a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1Zm13-6a1 1 0 1 0 0 2h4a1 1 0 1 0 0-2h-4Z"
-                clip-rule="evenodd" />
-        </svg>
-
-        <h5 class="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">Total Mahasiswa Tidak Lolos
-        </h5>
-
-        <p class="mb-3 font-normal text-gray-500 dark:text-gray-400 text-2xl">{{ $countNotPassed }}</p>
-    </div> --}}
-</div>
-
-<div class="space-y-5 sm:space-y-6">
-
-    <div class="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03]">
-        <div class="px-5 py-4 sm:px-6 sm:py-5">
-
-            <h3 class="text-base font-medium text-gray-800 dark:text-white/90">
-
-                <p class="text-gray-700 inline text-xl dark:text-gray-300 font-bold">Daftar Status Kelulusan</p>
-                </svg>
-
-            </h3>
-        </div>
-
-        <div class="p-5 border-t border-gray-100 dark:border-gray-800 sm:p-6">
-
-            <div
-                class="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03]">
-                <div class="max-w-full overflow-x-auto pt-10 pl-5 pr-5 pb-5">
-
-                    <table id="search-table">
-
-                        <thead>
-                            <tr>
-                                <th>
-                                    <span class="flex items-center">
-                                        No
-                                    </span>
-                                </th>
-                                <th>
-                                    <span class="flex items-center">
-                                        Nama
-                                    </span>
-                                </th>
-                                <th>
-                                    <span class="flex items-center">
-                                        Status
-                                    </span>
-                                </th>
-                            </tr>
-                        </thead>
-
-                        <tbody>
-
-                            @foreach($resultStudents as $item)
-                            <tr>
-                                <td class="font-medium text-gray-900 whitespace-nowrap dark:text-white">{{
-                                    $loop->iteration }}</td>
-                                <td>{{ $item->name }}</td>
-                                <td>{{ $item->status == '' ? '-' : $item->status }}</td>
-                            </tr>
-                            @endforeach
-
-                        </tbody>
-                    </table>
-
+                        Semester {{ $semester }}
+                    </p>
                 </div>
             </div>
-        </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Tabel Data Mahasiswa -->
+                <div class="lg:col-span-2">
+                    <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+                        <div class="px-6 py-4 border-b border-gray-200">
+                            <h2 class="text-xl font-bold text-gray-800">Data Mahasiswa</h2>
+                            <p class="text-gray-600 text-sm">Daftar mahasiswa yang mengajukan beasiswa prestasi</p>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="w-full">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">NIM</th>
+                                        <th class="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nama</th>
+                                        @foreach ($criterias as $criteria)
+                                            <th class="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ $criteria->criteria_name }}</th>
+                                        @endforeach
+                                        <th class="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ranking</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-gray-200">
+                                    @foreach ($alternatives as $alternative)
+                                        <tr>
+                                            <td class="py-4 px-6 whitespace-nowrap text-sm text-gray-800">{{ $alternative->nim }}</td>
+                                            <td class="py-4 px-6 whitespace-nowrap text-sm text-gray-800">{{ $alternative->name }}</td>
+                                            @foreach ($criterias as $criteria)
+                                                @php
+                                                    $score = $alternative->scores->firstWhere('criteria_id', $criteria->criteria_id);
+                                                @endphp
+                                                <td class="py-4 px-6 whitespace-nowrap text-sm text-gray-800">
+                                                    {{ $score ? $score->score : 'N/A' }}
+                                                </td>
+                                            @endforeach
+                                            <td class="py-4 px-6 whitespace-nowrap text-sm text-gray-800 font-bold">
+                                                {{ $loop->iteration }}
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="px-6 py-4 border-t border-gray-200 text-center">
+                            <a href="{{ route('students.index') }}" class="text-indigo-600 hover:text-indigo-800 font-medium">Lihat semua data →</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section Hasil SPK -->
+                <div>
+                    <div class="bg-white rounded-xl shadow-sm overflow-hidden h-full">
+                        <div class="px-6 py-4 border-b border-gray-200">
+                            <h2 class="text-xl font-bold text-gray-800">Top 5 Penerima Beasiswa</h2>
+                            <p class="text-gray-600 text-sm">Perankingan berdasarkan nilai WP tertinggi</p>
+                        </div>
+                        <div class="p-6">
+                            <div class="space-y-6">
+                                <!-- Mahasiswa 1 -->
+                                @foreach ($alternatives->take(5) as $index => $alternative)
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center gap-2">
+                                        <span class="badge-ranking  text-black mr-4">
+                                            {{ $loop->iteration }}
+                                            {{ $loop->iteration == 1 ? '🏆' : ($loop->iteration == 2 ? '🥈' : ($loop->iteration == 3 ? '🥉' : '⭐')) }}
+                                        </span>
+                                        <div>
+                                            <h4 class="font-bold text-gray-800">{{ $alternative->name }}</h4>
+                                            <p class="text-gray-600 text-sm">NIM: {{ $alternative->nim }} | Nilai WP: {{ number_format($alternative->final_score, 3) }}</p>
+                                        </div>
+                                    </div>
+                                    <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium">Lolos</span>
+                                </div>
+                                @endforeach
+                            </div>
+
+                            <!-- Progress Bar Section -->
+                            <div class="mt-10 pt-6 border-t border-gray-200">
+                                <h3 class="font-bold text-gray-800 mb-4">Status Seleksi</h3>
+                                <div class="space-y-4">
+                                    <div>
+                                        <div class="flex justify-between mb-1">
+                                            <span class="text-sm font-medium text-gray-700">Lolos Seleksi</span>
+                                            <span class="text-sm font-medium text-gray-700">{{ $alternatives->count() > 0 ? ($alternatives->count() / $totalAlternatives) * 100 : 0 }}%</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                            <div class="bg-green-600 h-2.5 rounded-full progress-bar" style="width: {{$alternatives->count() > 0 ? ($alternatives->count() / $totalAlternatives) * 100 : 0}}"></div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="flex justify-between mb-1">
+                                            <span class="text-sm font-medium text-gray-700">Tidak Lolos</span>
+                                            <span class="text-sm font-medium text-gray-700">{{ $alternatives->count() > 0 ? (1 - ($alternatives->count() / $totalAlternatives)) * 100 : 0 }}%</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                            <div class="bg-red-600 h-2.5 rounded-full progress-bar" style="width: {{ $alternatives->count() > 0 ? (1 - ($alternatives->count() / $totalAlternatives)) * 100 : 0 }}"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mt-6 flex space-x-4">
+                                    <div class="flex items-center">
+                                        <div class="h-3 w-3 rounded-full bg-green-600 mr-2"></div>
+                                        <span class="text-sm text-gray-700">Lolos ({{ $alternatives->count() }} mahasiswa)</span>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <div class="h-3 w-3 rounded-full bg-red-600 mr-2"></div>
+                                        <span class="text-sm text-gray-700">Tidak Lolos ({{ $totalAlternatives - $alternatives->count() }} mahasiswa)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        {{-- <!-- Footer -->
+        <footer class="bg-white border-t border-gray-200 py-6 px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="text-gray-600 text-sm mb-4 md:mb-0">
+                    <p>Copyright © <span class="font-medium">Sistem SPK Beasiswa Prestasi</span> - 2023/2024</p>
+                </div>
+                <div class="flex space-x-4">
+                    <a href="#" class="text-gray-500 hover:text-indigo-600 text-sm">Kebijakan Privasi</a>
+                    <a href="#" class="text-gray-500 hover:text-indigo-600 text-sm">Syarat & Ketentuan</a>
+                    <a href="#" class="text-gray-500 hover:text-indigo-600 text-sm">Bantuan</a>
+                </div>
+            </div>
+        </footer> --}}
     </div>
-</div>
 
 @endsection

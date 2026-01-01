@@ -3,17 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\Alternative;
+use App\Models\Criteria;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
     public function index()
     {
-        $countStudents = Alternative::count('alternative_id');
-        $countPassed = Alternative::where('status', 'lolos')->count('alternative_id');
-        $countNotPassed = Alternative::where('status', 'tidak lolos')->count('alternative_id');
-        $resultStudents = Alternative::select('alternatives.name', 'alternatives.status')->get();
-
-        return view('dashboard.index', compact('countStudents', 'countPassed', 'countNotPassed', 'resultStudents'));
+        $criterias = Criteria::all();
+        $totalAlternatives = Alternative::count();
+        $alternatives = Alternative::with('scores')->orderBy('final_score', 'desc')->limit(15)->get();
+        return view('dashboard.index', compact('criterias', 'alternatives', 'totalAlternatives'));
     }
 }
